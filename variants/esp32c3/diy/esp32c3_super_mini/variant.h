@@ -1,61 +1,50 @@
-#ifndef _VARIANT_ESP32C3_SUPER_MINI_
-#define _VARIANT_ESP32C3_SUPER_MINI_
+#ifndef VARIANT_LLCC68_SUPERMINI_H
+#define VARIANT_LLCC68_SUPERMINI_H
 
-/*----------------------------------------------------------------------------
- *        Headers
- *----------------------------------------------------------------------------*/
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-// I2C (Wire) & OLED
-#define WIRE_INTERFACES_COUNT (1)
-#define I2C_SDA (1)
-#define I2C_SCL (0)
-
-#define USE_SSD1306
-
-// GPS
-#undef GPS_RX_PIN
-#undef GPS_TX_PIN
-#define GPS_RX_PIN (20)
-#define GPS_TX_PIN (21)
-
-// Button
-#define BUTTON_PIN (9) // BOOT button
-
-// LoRa
-#define USE_LLCC68
-#define USE_SX1262
-// #define USE_RF95
-#define USE_SX1268
-
-#define LORA_DIO0 RADIOLIB_NC
-#define LORA_RESET (5)
-#define LORA_DIO1 (3)
-#define LORA_RXEN (2)
-#define LORA_BUSY (4)
-#define LORA_SCK (10)
-#define LORA_MISO (6)
-#define LORA_MOSI (7)
-#define LORA_CS (8)
-
-#define SX126X_CS LORA_CS
-#define SX126X_DIO1 LORA_DIO1
-#define SX126X_BUSY LORA_BUSY
-#define SX126X_RESET LORA_RESET
-#define SX126X_RXEN LORA_RXEN
-
-#define SX126X_DIO3_TCXO_VOLTAGE (1.8)
-#define TCXO_OPTIONAL // make it so that the firmware can try both TCXO and XTAL
-
-#ifdef __cplusplus
-}
+#ifdef USE_SX1262
+  #undef USE_SX1262
+#endif
+#ifdef USE_SX1268
+  #undef USE_SX1268
+#endif
+#ifndef USE_LLCC68
+  #define USE_LLCC68
 #endif
 
-/*----------------------------------------------------------------------------
- *        Arduino objects - C++ only
- *----------------------------------------------------------------------------*/
+// SPI-интерфейс LoRa строго по вашей текущей распайке (П7 - это GPIO6, П8 - это GPIO7)
+#define SX126X_SCK     8   // Пин [ Л ] 4 (GPIO8) — Зеленый
+#define SX126X_MISO    9   // Пин [ Л ] 5 (GPIO9) — Бело-синий
+#define SX126X_MOSI    6   // Пин [ п ] 7 (GPIO6) — Бело-оранжевый
+#define SX126X_CS      7   // Пин [ п ] 8 (GPIO7) — Бело-коричневый
 
-#endif
+#define LORA_SCK  SX126X_SCK
+#define LORA_MOSI SX126X_MOSI
+#define LORA_MISO SX126X_MISO
+#define LORA_CS   SX126X_CS
+
+#define SX126X_TXEN RADIOLIB_NC
+#define SX126X_RXEN RADIOLIB_NC
+
+// Сигналы управления радиочипом строго по вашей распайке
+#define SX126X_BUSY  2   // Пин [ п ] 5 (GPIO2) — Бело-коричневый
+#define SX126X_RESET 3   // Пин [ л ] 8 (GPIO3 / Маркировка RST) — Коричневый
+#define SX126X_DIO1  10  // Пин [ Л ] 7 (GPIO10) — Бело-зеленый
+#define LORA_DIO1    SX126X_DIO1
+
+#define SX126X_DIO2_AS_RF_SWITCH     
+#define SX126X_DIO3_TCXO_VOLTAGE 1.8 
+#define SX126X_MAX_POWER 22
+
+#define SPI_INTERFACES_COUNT 2
+#define SPI_SCK    SX126X_SCK
+#define SPI_MISO   SX126X_MISO
+#define SPI_MOSI   SX126X_MOSI
+#define SPI_CS     SX126X_CS
+
+#define HAS_RADIO 1      
+#define NO_OTA    1      
+#define HAS_SCREEN   0
+#define USE_GPS      0   
+#define BUTTON_PIN 20
+
+#endif // VARIANT_LLCC68_SUPERMINI_H
