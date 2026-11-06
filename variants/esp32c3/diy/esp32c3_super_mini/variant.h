@@ -1,21 +1,23 @@
 #ifndef VARIANT_LLCC68_SUPERMINI_H
 #define VARIANT_LLCC68_SUPERMINI_H
 
-#ifdef USE_SX1262
-  #undef USE_SX1262
+// Настройка под чип SX1262 из присланного даташита Ebyte E22
+#ifndef USE_SX1262
+  #define USE_SX1262
 #endif
+
 #ifdef USE_SX1268
   #undef USE_SX1268
 #endif
-#ifndef USE_LLCC68
-  #define USE_LLCC68
+#ifdef USE_LLCC68
+  #undef USE_LLCC68
 #endif
 
-// SPI-интерфейс LoRa строго по вашей текущей распайке (П7 - это GPIO6, П8 - это GPIO7)
-#define SX126X_SCK     8   // Пин [ Л ] 4 (GPIO8) — Зеленый
-#define SX126X_MISO    9   // Пин [ Л ] 5 (GPIO9) — Бело-синий
-#define SX126X_MOSI    6   // Пин [ п ] 7 (GPIO6) — Бело-оранжевый
-#define SX126X_CS      7   // Пин [ п ] 8 (GPIO7) — Бело-коричневый
+// SPI-интерфейс LoRa строго по вашей финальной таблице (GPIO6 и GPIO7 на месте!)
+#define SX126X_SCK     8   // Пин [ Л ] 4 (GPIO8)
+#define SX126X_MISO    9   // Пин [ Л ] 5 (GPIO9)
+#define SX126X_MOSI    6   // Пин [ п ] 7 (GPIO6)
+#define SX126X_CS      7   // Пин [ п ] 8 (GPIO7)
 
 #define LORA_SCK  SX126X_SCK
 #define LORA_MOSI SX126X_MOSI
@@ -25,10 +27,10 @@
 #define SX126X_TXEN RADIOLIB_NC
 #define SX126X_RXEN RADIOLIB_NC
 
-// Сигналы управления радиочипом строго по вашей распайке
-#define SX126X_BUSY  2   // Пин [ п ] 5 (GPIO2) — Бело-коричневый
-#define SX126X_RESET 3   // Пин [ л ] 8 (GPIO3 / Маркировка RST) — Коричневый
-#define SX126X_DIO1  10  // Пин [ Л ] 7 (GPIO10) — Бело-зеленый
+// Линии управления строго по вашей таблице подключений
+#define SX126X_BUSY  2   // Пин [ п ] 5 (GPIO2)
+#define SX126X_RESET 3   // Пин [ л ] 8 (Физическая маркировка RST / GPIO3)
+#define SX126X_DIO1  10  // Пин [ Л ] 7 (GPIO10)
 #define LORA_DIO1    SX126X_DIO1
 
 #define SX126X_DIO2_AS_RF_SWITCH     
