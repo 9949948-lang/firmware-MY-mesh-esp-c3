@@ -12,7 +12,8 @@
 
 // === УПРАВЛЕНИЕ ===
 #define LORA_RESET   10
-#define LORA_DIO1    3
+#define LORA_DIO0    3      // Используем GPIO3 для IRQ (так требует код Meshtastic для RF95)
+#define LORA_DIO1    3      // Физически провод припаян сюда (DIO1 модуля)
 
 // === СИСТЕМНОЕ ===
 #define SPI_INTERFACES_COUNT 2
@@ -27,4 +28,4 @@
 #define USE_GPS      0
 #define BUTTON_PIN 20
 
-#endif
+#endif // VARIANT_LLCC68_SUPERMINI_H
